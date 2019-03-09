@@ -1,22 +1,28 @@
 class PigLatinizer
-  attr_accessor :user_phrase
-
-  def initialize
-    @user_phrase = user_phrase
-  end
 
   def piglatinize(user_phrase)
+    if user_phrase.split(" ").count > 1
+      piglatinize_sentence
+    else
+      piglatinize_word
+    end
+  end
+
+  def piglatinize_word(user_phrase)
+
     alpha = ('a'..'z').to_a
     vowels = %w[a e i o u]
     consonants = alpha - vowels
 
-    if vowels.include?(user_phrase[0])
-      user_phrase + 'way'
-    elsif consonants.include?(user_phrase[0]) && consonants.include?(user_phrase[1])
-      user_phrase[2..-1] + user_phrase[0..1] + 'ay'
-    else consonants.include?(user_phrase[0])
-      user_phrase[1..-1] + user_phrase[0] + 'ay'
-    end
-  end
+    arr = user_phrase.split(" ")
 
-end
+      if vowels.include?(arr[0])
+        arr + 'way'
+      elsif consonants.include?(arr[0]) && consonants.include?(arr[1])
+        arr[2..-1] + arr[0..1] + 'ay'
+      else consonants.include?(arr[0])
+        arr[1..-1] + arr[0] + 'ay'
+      end #ends if
+    end #ends method
+
+end #ends class
