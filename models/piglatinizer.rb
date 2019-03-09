@@ -5,25 +5,27 @@ class PigLatinizer
   #  @user_phrase = user_phrase
   #end
 
-  def piglatinize(input_str)
-      input_str.split(" ").length == 1 ? piglatinize_word(input_str) : piglatinize_sentence(input_str)
+  def piglatinize(user_input)
+      if user_input.split(" ").length == 1
+          piglatinize_word(user_input)
+      else
+        piglatinize_sentence(user_input)
+      end
     end
 
-    private
-
-    def consonant?(char)
-      !char.match(/[aAeEiIoOuU]/)
+    def vowel?(char)
+      char.match(/[aAeEiIoOuU]/)
     end
 
     def piglatinize_word(word)
       # word starts with vowel
-      if !consonant?(word[0])
+      if vowel?(word[0])
         word = word + "w"
       # word starts with 3 consonants
-      elsif consonant?(word[0]) && consonant?(word[1]) && consonant?(word[2])
+    elsif !vowel?(word[0]) && !vowel?(word[1]) && !vowel?(word[2])
         word = word.slice(3..-1) + word.slice(0,3)
       # word starts with 2 consonants
-      elsif consonant?(word[0]) && consonant?(word[1])
+    elsif !vowel?(word[0]) && !vowel?(word[1])
         word = word.slice(2..-1) + word.slice(0,2)
       # word starts with 1 consonant
       else
@@ -35,6 +37,6 @@ class PigLatinizer
     def piglatinize_sentence(sentence)
       sentence.split.collect { |word| piglatinize_word(word) }.join(" ")
     end
-  
+
 
 end #ends class
